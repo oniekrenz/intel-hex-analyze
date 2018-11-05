@@ -1,0 +1,48 @@
+group 'de.niekrenz.intelhex.analyze'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("gnu.getopt:java-getopt:1.0.13")
+    compile("org.apache.commons:commons-lang3:3.8.1")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.9.7")
+    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.7")
+    compile("org.reflections:reflections:0.9.11")
+    testCompile("junit:junit:4.12")
+    testCompile("org.mockito:mockito-core:2.+")
+    testCompile("org.hamcrest:hamcrest-all:1.3")
+    testCompile("pl.pragmatists:JUnitParams:1.1.0")
+}
+
+sourceSets {
+    main.java.srcDir "src/main/java"
+    main.resources.srcDir "src/main/resources"
+}
+
+jar {
+    manifest {
+        attributes(
+                'Built-By': System.properties['user.name'],
+                'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+                // 'Build-Revision' : versioning.info.commit,
+                'Created-By': "Gradle ${gradle.gradleVersion}",
+                'Build-Jdk': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+                'Build-OS': "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': "de.niekrenz.intelhex.analyze.Main"
+        )
+    }
+    from(configurations.compile.collect { entry -> zipTree(entry) }) {
+        exclude 'META-INF/MANIFEST.MF'
+        exclude 'META-INF/*.SF'
+        exclude 'META-INF/*.DSA'
+        exclude 'META-INF/*.RSA'
+    }
+}

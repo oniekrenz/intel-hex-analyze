@@ -1,0 +1,26 @@
+#
+# Memory model map for Nordic Semiconductor nRF51822 256KB with Softdevice S130 V2.0
+#
+# http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.s130.sds/dita/softdevices/s130/mem_usage/mem_usage.html
+# http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.s130.sds/dita/softdevices/s130/mem_usage/mem_resource_map_usage.html
+#
+aliases:
+- nRF51822_256kb_S130_V2.0
+- nRF51822_256_S130_V2.0
+- nRF51822_AA_S130_V2.0
+- nRF51822_AC_S140_V2.0
+memory:
+- name: Program Memory
+  type: FLASH
+  begin: 0x0
+  end: 0x3ffff
+  sections:
+  - name: MBR (Master Boot Record)
+    begin: 0x0
+    end: 0xfff
+  - name: S130 SoftDevice
+    begin: 0x1000
+    end: 0x1afff
+  - name: APP_CODE_BASE
+    begin: 0x1b000
+    end: 0x3ffff
