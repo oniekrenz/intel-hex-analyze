@@ -70,10 +70,11 @@ public class HexLineParser {
                     case EOF:
                         break;
                     case EXTENDED_SEGMENT_ADDRESS:
-                        context.address = (((long) lineContext.data[0]) << 4);
+                        context.address = (((long) lineContext.data[0]) << 12) | (((long) lineContext.data[1]) << 4);
                         break;
                     case START_SEGMENT_ADDRESS:
-                        context.address = (((long) lineContext.data[0]) << 4) + (((long) lineContext.data[1]) << 16);
+                        context.address = ((((long) lineContext.data[0]) << 12) | (((long) lineContext.data[1]) << 4))
+                                | ((((long) lineContext.data[2]) << 8) | ((long) lineContext.data[3]));
                         break;
                     case EXTENDED_LINEAR_ADDRESS:
                         context.address = (((long) lineContext.data[0]) << 24) | (((long) lineContext.data[1]) << 16);
